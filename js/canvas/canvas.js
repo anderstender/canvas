@@ -31,14 +31,21 @@ var Canvas = (function(objCanv){
            this.context.strokeStyle = this.strokeColor;
         };
         var mainItems = this.items;
-        this.Add = {
-            Item : function(item){
-               var key = MathC.randWn(10);
-               mainItems[key] = item;
-               return key;
-            }
+        this.Add = function(item){
+            var key = MathC.randWn(10);
+            mainItems[key] = item;
+            return key;
         };
         
+        this.Set = function(key, params){
+            if(typeof mainItems[key] == 'object'){
+                for(var k in params){
+                    mainItems[key].params[k] = params[k];
+                }
+                return true;
+            }
+            return false;
+        };
         
         //this.set
         
@@ -54,7 +61,7 @@ var Canvas = (function(objCanv){
         this.All = function(){
             for(var k in this.items){
                 var item = this.items[k];
-                item.draw(this.context, item.params);
+                item.draw(this.context);
             }
         };
         
